@@ -1,6 +1,7 @@
 from site_mc.models import Cliente
 from django.shortcuts import render
 from django.template import Context, Template
+import requests
 
 class cliente():
     id = 1
@@ -10,8 +11,10 @@ class cliente():
 
 def site_list(request):
     # context = Context ( {"clientes", [cliente(), cliente()]})
-    context = {'clientes': [cliente(), cliente()]}
     # clintes =  
+    response = requests.get('https://crhisllane.pythonanywhere.com/Clientes/')
+    
+    context = {'clientes': response.json()}
     
     # context["clientes"] = [cliente(), cliente()]    
     return render(request, 'site_mc/site_list.html', context)
