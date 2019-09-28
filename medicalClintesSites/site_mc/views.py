@@ -19,6 +19,17 @@ def site_list(request):
     # context["clientes"] = [cliente(), cliente()]    
     return render(request, 'site_mc/site_list.html', context)
 
+def delete(request, id):
+
+    delete = requests.delete('https://crhisllane.pythonanywhere.com/Clientes/' + str(id)) 
+    print(delete.ok)
+
+    consulta = requests.get('https://crhisllane.pythonanywhere.com/Clientes/')
+    context = {'clientes': consulta.json()}
+
+    return render(request, 'site_mc/site_list.html', context)
+    print( "chegou aqui")
+
 '''
 class ClienteViewSet(ModelViewSet):
     """
