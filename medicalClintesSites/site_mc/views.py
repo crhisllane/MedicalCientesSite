@@ -61,10 +61,30 @@ def alterar(request, id):
 
     return render(request, 'site_mc/site_alterar.html', context)
 
-def alterar_put(request, cliente):
-    print("#########################")
-    print(cliente.nomes)
+def cadastrar(request):
+    context = {'form' : ClienteForm()}
 
+    if request.method == 'POST':
+        form = ClienteForm(request.POST)
+        if form.is_valid():
+            nome = form.cleaned_data['nome']
+            dataNascimento = form.cleaned_data['dataNascimento'].strftime("%d-%m-%Y")
+            dataColeta = form.cleaned_data['dataColeta'].strftime("%d-%m-%Y")
+            dataEntrega = form.cleaned_data['dataEntrega'].strftime("%d-%m-%Y")
+            codigoIdentificador = form.cleaned_data['codigoIdentificador']
+            CRM = form.cleaned_data['CRM']
+
+            resposta = requests.post(f'https://crhisllane.pythonanywhere.com/Clientes/', data= {
+                "nome": nome,
+                "dataNascimento": dataNascimento,
+                "dataColeta": dataColeta,
+                "dataEntrega": dataEntrega,
+                "codigoIdentificador": codigoIdentificador,
+                "CRM": CRM,
+            })
+            print(resposta.text)
+
+    return render(request, 'site_mc/site_cadastro.html', context)
 '''
 class ClienteViewSet(ModelViewSet):
     """

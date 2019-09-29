@@ -187,60 +187,15 @@
   </head>
   <body>
     <div class="testbox">
-      <form action="/">
+      <form method="POST">
+        {% csrf_token %}
         <div class="banner">
-          <h1>Medical Client Cadastro</h1>
+            <h1>Medical Client Editor</h1>
         </div>
-        <div class="item">
-          <label for="name">Name<span>*</span></label>
-            <input id="name" type="text" name="name" placeholder="Nome Completo" />
-        </div>
-        <div class="item">
-          <div class="name-item">
-            <div>
-                <label for="bdate">Data de Nascimento<span>*</span></label>
-                <input id="bdate" type="date" name="bdate" required/>
-                <i class="fas fa-calendar-alt"></i>
-            </div>
-            <div>
-                <label for="ddate">Data da Coleta<span>*</span></label>
-                <input id="ddate" type="date" name="ddate" required/>
-                <i class="fas fa-calendar-alt"></i>
-            </div>
-            <div>
-                <label for="edate">Data da Entrega<span>*</span></label>
-                <input id="edate" type="date" name="edate" required/>
-                <i class="fas fa-calendar-alt"></i>
-            </div>
-            <div>
-                <label for="cdate">Data de Cadastro<span>*</span></label>
-                <input id="cdate" type="date" name="cdate" required/>
-                <i class="fas fa-calendar-alt"></i>
-            </div>
-            <div>
-                <label for="cod">Codigo Cliente</label>
-                <input id="code" type="text" name="name" />
-            </div>
-            <div>
-                <label for="crm">CRM Solicitante</label>
-                <input id="crm" type="text" name="crm" />
-            </div>
-        </div>
-        <div class="question">
-          <label>O resultado foi entregue?</label>
-          <div class="question-answer">
-            <div>
-              <input  type="radio" value="none" id="radio_1" name="availability"/>
-              <label for="radio_1" class="radio"><span>Sim</span></label>
-            </div>
-            <div>
-                <input  type="radio" value="none" id="radio_2" name="availability"/>
-                <label for="radio_2" class="radio"><span>Não</span></label>
-            </div>
-          </div>
-        </div>
+        {{ form.as_p }}
         <div class="btn-block">
-          <button type="submit" href="/">Send</button>
+          <button type="submit">Criar</button>
+          <a href="{% url 'site_list' %}"><button type="button">Voltar</button></a>
         </div>
       </form>
     </div>
