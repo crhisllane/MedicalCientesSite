@@ -6,5 +6,4 @@ class ClienteForm(forms.Form):
     dataNascimento = forms.DateField(input_formats=['%d-%m-%Y'])
     dataColeta = forms.DateField(input_formats=['%d-%m-%Y'])
     dataEntrega = forms.DateField(input_formats=['%d-%m-%Y'])
-    codigoIdentificador = forms.CharField()
     CRM = forms.CharField()

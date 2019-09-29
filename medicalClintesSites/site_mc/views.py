@@ -4,22 +4,12 @@ from django.template import Context, Template
 from site_mc.forms import ClienteForm
 import requests
 
-class cliente():
-    nome = ""
-    dataNascimento = ""
-    dataColeta = ""
-    dataEntrega = ""
-    codigoIdentificador = ""
-    CRM = ""
 
 def site_list(request):
-    # context = Context ( {"clientes", [cliente(), cliente()]})
-    # clintes =  
     response = requests.get('https://crhisllane.pythonanywhere.com/Clientes/')
     
     context = {'clientes': response.json()}
     
-    # context["clientes"] = [cliente(), cliente()]    
     return render(request, 'site_mc/site_list.html', context)
 
 def delete(request, id):
@@ -44,7 +34,6 @@ def alterar(request, id):
             dataNascimento = form.cleaned_data['dataNascimento'].strftime("%d-%m-%Y")
             dataColeta = form.cleaned_data['dataColeta'].strftime("%d-%m-%Y")
             dataEntrega = form.cleaned_data['dataEntrega'].strftime("%d-%m-%Y")
-            codigoIdentificador = form.cleaned_data['codigoIdentificador']
             CRM = form.cleaned_data['CRM']
 
             resposta = requests.put(f'https://crhisllane.pythonanywhere.com/Clientes/{id}/', data= {
@@ -52,7 +41,6 @@ def alterar(request, id):
                 "dataNascimento": dataNascimento,
                 "dataColeta": dataColeta,
                 "dataEntrega": dataEntrega,
-                "codigoIdentificador": codigoIdentificador,
                 "CRM": CRM,
             })
             context = {'form' : ClienteForm(resposta.json())}
@@ -71,7 +59,6 @@ def cadastrar(request):
             dataNascimento = form.cleaned_data['dataNascimento'].strftime("%d-%m-%Y")
             dataColeta = form.cleaned_data['dataColeta'].strftime("%d-%m-%Y")
             dataEntrega = form.cleaned_data['dataEntrega'].strftime("%d-%m-%Y")
-            codigoIdentificador = form.cleaned_data['codigoIdentificador']
             CRM = form.cleaned_data['CRM']
 
             resposta = requests.post(f'https://crhisllane.pythonanywhere.com/Clientes/', data= {
@@ -79,7 +66,6 @@ def cadastrar(request):
                 "dataNascimento": dataNascimento,
                 "dataColeta": dataColeta,
                 "dataEntrega": dataEntrega,
-                "codigoIdentificador": codigoIdentificador,
                 "CRM": CRM,
             })
             print(resposta.text)
