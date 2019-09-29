@@ -35,6 +35,7 @@ def delete(request, id):
 
 def alterar(request, id):
     consulta = requests.get('https://crhisllane.pythonanywhere.com/Clientes/'+ str(id))
+    context = {'form' : ClienteForm(consulta.json())}
 
     if request.method == 'POST':
         form = ClienteForm(request.POST)
@@ -45,7 +46,7 @@ def alterar(request, id):
             dataEntrega = form.cleaned_data['dataEntrega'].strftime("%d-%m-%Y")
             codigoIdentificador = form.cleaned_data['codigoIdentificador']
             CRM = form.cleaned_data['CRM']
-            
+
             resposta = requests.put(f'https://crhisllane.pythonanywhere.com/Clientes/{id}/', data= {
                 "nome": nome,
                 "dataNascimento": dataNascimento,
@@ -54,8 +55,11 @@ def alterar(request, id):
                 "codigoIdentificador": codigoIdentificador,
                 "CRM": CRM,
             })
-            
-    return render(request, 'site_mc/site_alterar.html', {context})
+            context = {'form' : ClienteForm(resposta.json())}
+            print(resposta.text)
+        
+
+    return render(request, 'site_mc/site_alterar.html', context)
 
 def alterar_put(request, cliente):
     print("#########################")
