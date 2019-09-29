@@ -34,7 +34,7 @@
                         <td>{{o.nome}}</td>
                         <td>{{o.codigoIdentificador}}</td>
                         <td>{{o.CRM}}</td>
-                        <td><a><button type="button" class="btn btn-outline-dark"><i class="material-icons"> edit</i></button></a></td>
+                        <td><a href="{% url 'alterar' o.id %}"><button type="button" class="btn btn-outline-dark"><i class="material-icons"> edit</i></button></a></td>
                         <td><a href="{% url 'delete' o.id %}"><button type="button" class="btn btn-outline-dark"><i class="material-icons">delete</i> </button> </a> </td>
 
                     </tr>

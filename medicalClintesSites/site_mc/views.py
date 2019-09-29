@@ -1,13 +1,16 @@
 from site_mc.models import Cliente
 from django.shortcuts import render
 from django.template import Context, Template
+from site_mc.forms import ClienteForm
 import requests
 
 class cliente():
-    id = 1
-    nome = "xuxu"
-    codigo = "123"
-    crm = "XXX"
+    nome = ""
+    dataNascimento = ""
+    dataColeta = ""
+    dataEntrega = ""
+    codigoIdentificador = ""
+    CRM = ""
 
 def site_list(request):
     # context = Context ( {"clientes", [cliente(), cliente()]})
@@ -29,6 +32,34 @@ def delete(request, id):
 
     return render(request, 'site_mc/site_list.html', context)
     print( "chegou aqui")
+
+def alterar(request, id):
+    consulta = requests.get('https://crhisllane.pythonanywhere.com/Clientes/'+ str(id))
+
+    if request.method == 'POST':
+        form = ClienteForm(request.POST)
+        if form.is_valid():
+            nome = form.cleaned_data['nome']
+            dataNascimento = form.cleaned_data['dataNascimento'].strftime("%d-%m-%Y")
+            dataColeta = form.cleaned_data['dataColeta'].strftime("%d-%m-%Y")
+            dataEntrega = form.cleaned_data['dataEntrega'].strftime("%d-%m-%Y")
+            codigoIdentificador = form.cleaned_data['codigoIdentificador']
+            CRM = form.cleaned_data['CRM']
+            
+            resposta = requests.put(f'https://crhisllane.pythonanywhere.com/Clientes/{id}/', data= {
+                "nome": nome,
+                "dataNascimento": dataNascimento,
+                "dataColeta": dataColeta,
+                "dataEntrega": dataEntrega,
+                "codigoIdentificador": codigoIdentificador,
+                "CRM": CRM,
+            })
+            
+    return render(request, 'site_mc/site_alterar.html', {context})
+
+def alterar_put(request, cliente):
+    print("#########################")
+    print(cliente.nomes)
 
 '''
 class ClienteViewSet(ModelViewSet):
