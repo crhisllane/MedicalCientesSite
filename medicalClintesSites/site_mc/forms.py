@@ -7,3 +7,5 @@ class ClienteForm(forms.Form):
     dataColeta = forms.DateField(input_formats=['%d-%m-%Y'])
     dataEntrega = forms.DateField(input_formats=['%d-%m-%Y'])
     CRM = forms.CharField()
+
+

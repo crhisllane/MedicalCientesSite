@@ -3,6 +3,8 @@ from django.shortcuts import render
 from django.template import Context, Template
 from site_mc.forms import ClienteForm
 import requests
+import json
+from django import forms
 
 
 def site_list(request):
@@ -50,16 +52,34 @@ def alterar(request, id):
     return render(request, 'site_mc/site_alterar.html', context)
 
 def cadastrar(request):
-    context = {'form' : ClienteForm()}
+    formulario = ClienteForm()
+#    consultaMedicos = requests.get('https://crhisllane.pythonanywhere.com/Medicos/')
+#    medicosJson = json.loads(consultaMedicos.text)
+#
+#    medicosChoices = []
+#    for item in medicosJson:
+#        medicosChoices.append((item["id"], item["nome"])) 
+#
+#    xxx = forms.ChoiceField(choices=(medicosChoices))
+#    print(xxx)
+#    formulario.CRM.append(xxx)
+#    print(formulario)
+    
 
+    context = {'form' : formulario}
     if request.method == 'POST':
         form = ClienteForm(request.POST)
+
+        
+
         if form.is_valid():
             nome = form.cleaned_data['nome']
             dataNascimento = form.cleaned_data['dataNascimento'].strftime("%d-%m-%Y")
             dataColeta = form.cleaned_data['dataColeta'].strftime("%d-%m-%Y")
             dataEntrega = form.cleaned_data['dataEntrega'].strftime("%d-%m-%Y")
             CRM = form.cleaned_data['CRM']
+
+            print(CRM)
 
             resposta = requests.post(f'https://crhisllane.pythonanywhere.com/Clientes/', data= {
                 "nome": nome,
@@ -71,6 +91,10 @@ def cadastrar(request):
             print(resposta.text)
 
     return render(request, 'site_mc/site_cadastro.html', context)
+
+
+
+
 '''
 class ClienteViewSet(ModelViewSet):
     """
