@@ -9,6 +9,8 @@ onde é possível armazenar dados de clientes associados a um médico. Alterar e
 ## o que é necessário para rodar?
 Recomendo usar um ambiente virtual exemplo:
 `python3 -m venv env`
+para ativar o ambiente virtual basta usar:
+`source env/bin/activate`
 
 Além disso é necessário instalar os requerimentos disponíveis no arquivo de requerimentos
 `pip3 install -r ../requiriments.txt` 
